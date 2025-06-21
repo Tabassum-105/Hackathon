@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DemoData } from './services/demo-data';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,15 @@ import { Component } from '@angular/core';
   standalone: false,
   styleUrl: './app.scss'
 })
-export class App {
+export class App implements OnInit{
   protected title = 'Hackathon-Demo';
+  constructor(private demoDataService: DemoData) {
+  }
+
+  ngOnInit(): void {
+    this.demoDataService.getData().subscribe((res)=> {
+      console.log(res);
+      
+    })
+  }
 }
