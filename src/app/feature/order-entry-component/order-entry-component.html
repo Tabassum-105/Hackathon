@@ -1,0 +1,94 @@
+<section class="order-entry-cnt">
+    <div class="header-cnt">
+        <h1 class="page-header">Order Placement</h1>
+    </div>
+    
+    <section class="field-row">
+        <h4 class="page-title">Balance Funds: </h4>
+        {{this.funds | currency}}
+    </section>
+
+    <form class="order-form" [formGroup]="fundForm" (ngSubmit)="onPlaceOrder()">
+
+        <!-- Fund Name -->
+        <div class="field-row">
+            <div class="col-1">
+                <label for="fundName">Fund Name</label>
+            </div>
+
+            <div class="col-2">
+                <input id="fundName" type="text" formControlName="fundName" (blur)="checkExistingFundName()">
+                <div class="error-input" *ngIf="fundForm.get('fundName')?.touched && fundForm.get('fundName')?.invalid">
+                    Fund Name is required.
+                </div>
+                <div class="error-input"
+                    *ngIf="fundForm.get('fundName')?.touched && fundForm.get('fundName')?.value && !isShareAvailable">
+                    Fund Name is invalid.
+                </div>
+            </div>
+
+        </div>
+        <!-- <mat-form-field appearance="fill">
+        <mat-label>Fund Name</mat-label>
+        <input matInput formControlName="fundName">
+        <mat-error *ngIf="fundForm.get('fundName')?.touched && fundForm.get('fundName')?.hasError('required')">
+            Fund Name is required
+        </mat-error>
+    </mat-form-field> -->
+
+        <!-- Transaction Type -->
+        <div class="field-row">
+            <div class="col-1">
+                <label for="transactionType">Transaction Type</label>
+            </div>
+
+            <div class="col-2">
+                <select id="transactionType" formControlName="transactionType">
+                    <option value="">Select</option>
+                    <option *ngFor="let type of transactionTypes" [value]="type">{{ type }}</option>
+                </select>
+                <div class="error-input"
+                    *ngIf="fundForm.get('transactionType')?.touched && fundForm.get('transactionType')?.invalid">
+                    Transaction Type is required.
+                </div>
+            </div>
+        </div>
+
+        <!-- Quantity -->
+        <div class="field-row ">
+            <div class="col-1">
+                <label for="quantity">Quantity</label>
+            </div>
+            <div class="col-2">
+                <input id="quantity" type="number" formControlName="quantity" min="1">
+                <div class="error-input" *ngIf="fundForm.get('quantity')?.touched && fundForm.get('quantity')?.invalid">
+                    <div *ngIf="fundForm.get('quantity')?.errors?.['required']">
+                        Quantity is required.
+                    </div>
+                    <div *ngIf="fundForm.get('quantity')?.errors?.['min']">
+                        Quantity must be greater than 0.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Order Value-->
+        <div class="field-row bottom-margin">
+            <div class="col-1">
+                <label for="orderValue">Order Value</label>
+            </div>
+            <div class="col-2">
+                <input id="orderValue" type="number" formControlName="orderValue" min="1">
+            </div>
+        </div>
+        @if(lowBalance) {
+        <div class="error-input"> Your balance is low !</div>
+        }
+
+        <!-- Submit Button -->
+         <div class="submit-button">
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+         </div>
+        
+
+    </form>
+</section>

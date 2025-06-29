@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DemoData } from './services/demo-data';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -8,14 +9,11 @@ import { DemoData } from './services/demo-data';
   styleUrl: './app.scss'
 })
 export class App implements OnInit{
-  protected title = 'Hackathon-Demo';
-  constructor(private demoDataService: DemoData) {
+  constructor() {
   }
 
+   
   ngOnInit(): void {
-    this.demoDataService.getData().subscribe((res)=> {
-      console.log(res);
-      
-    })
+     
   }
 }
